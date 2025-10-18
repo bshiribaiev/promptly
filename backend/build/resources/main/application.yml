@@ -1,0 +1,24 @@
+server:
+  port: 8081
+
+spring:
+  main:
+    web-application-type: reactive
+  codec:
+    max-in-memory-size: 10MB
+
+app:
+  cors:
+    allowed-origins: "*"
+    allowed-methods: "GET,POST,OPTIONS"
+    allowed-headers: "*"
+  retrieval:
+    chunk-size: 900
+    overlap: 150
+  context:
+    default-budget-tokens: 800
+  llm:
+    provider: ${LLM_PROVIDER:none}
+    gemini:
+      apiKey: ${GEMINI_API_KEY:}
+      model: ${GEMINI_MODEL:gemini-2.5-flash}
