@@ -18,7 +18,8 @@ import org.springframework.core.io.buffer.DataBufferUtils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
-import com.hackknights.llm.LlmClient; // add this line
+import com.hackknights.llm.LlmClient; 
+import com.hackknights.llm.TranscriptionClient;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -30,11 +31,13 @@ import java.util.*;
 public class ApiController {
 
     private final RetrievalService retrieval;
-    private final LlmClient llm; // add this field
+    private final LlmClient llm; 
+    private final TranscriptionClient transcription;
 
-    public ApiController(RetrievalService retrieval, LlmClient llm) { // inject it
+    public ApiController(RetrievalService retrieval, LlmClient llm, TranscriptionClient transcription) {
         this.retrieval = retrieval;
         this.llm = llm;
+        this.transcription = transcription;
     }
 
     @GetMapping("/healthz")
@@ -71,6 +74,31 @@ public class ApiController {
             return new AskDto.AskResponse(r.templateId(), text, prompt, hits, answer);
         }).subscribeOn(Schedulers.boundedElastic()));
     }
+
+    @PostMapping(value = "/ask/voice", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Mono<AskDto.AskResponse> askVoice(
+            @RequestPart("audio") FilePart audio,
+            @RequestPart(value = "templateId", required = false) String templateId,
+            @RequestPart(value = "topK", required = false) Integer topK,
+            @RequestPart(value = "contextBudgetTokens", required = false) Integer contextBudgetTokens,
+            @RequestPart(value = "returnAnswer", required = false) Boolean returnAnswer
+    ) {
+        return saveTemp(audio)
+                .flatMap(tmp -> transcription.transcribe(tmp.toFile())
+                        .defaultIfEmpty("")
+                        .flatMap(text -> {
+                            String q = text.trim();
+                            int k = topK == null ? 6 : topK;
+                            int budget = contextBudgetTokens == null ? 800 : contextBudgetTokens;
+                            var hits = retrieval.query(q, k);
+                            String context = retrieval.packWithinTokens(hits, budget);
+                            String prompt = Templates.render(templateId, context, q);
+                            String answer = Boolean.TRUE.equals(returnAnswer) ? llm.complete(prompt) : null;
+                            return Mono.just(new AskDto.AskResponse(templateId, q, prompt, hits, answer));
+                        })
+                        .doFinally(__ -> { try { java.nio.file.Files.deleteIfExists(tmp); } catch (Exception ignored) {} })
+                );
+        }
 
     private Mono<Path> saveTemp(FilePart fp) {
         try {
