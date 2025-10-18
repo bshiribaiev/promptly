@@ -1,0 +1,62 @@
+[
+  {
+    "prompt": "Can you write some code for me",
+    "type": "bad",
+    "expectedScore": 2,
+    "notes": "Extremely vague. No context, purpose, constraints, or audience specified."
+  },
+  {
+    "prompt": "How do I make a website",
+    "type": "bad",
+    "expectedScore": 3,
+    "notes": "Too broad and open-ended. Missing details about technology, constraints, or use case."
+  },
+  {
+    "prompt": "Explain loops.",
+    "type": "bad",
+    "expectedScore": 3,
+    "notes": "Some purpose but lacks specificity, context, and format expectations."
+  },
+  {
+    "prompt": "Make a function.",
+    "type": "bad",
+    "expectedScore": 2,
+    "notes": "No detail about the function’s purpose, inputs, or expected output."
+  },
+  {
+    "prompt": "How do I use an API?",
+    "type": "bad",
+    "expectedScore": 3,
+    "notes": "Too general — missing context (which API, for what purpose) and constraints."
+  },
+  {
+    "prompt": "Help me debug.",
+    "type": "bad",
+    "expectedScore": 2,
+    "notes": "No context provided. Unclear what needs debugging or what language is being used."
+  },
+  {
+    "prompt": "Show me an algorithm.",
+    "type": "bad",
+    "expectedScore": 3,
+    "notes": "Unclear what problem the algorithm should solve. No constraints or audience defined."
+  },
+  {
+    "prompt": "What’s recursion?",
+    "type": "bad",
+    "expectedScore": 3,
+    "notes": "Very basic. Purpose is partially clear but lacks context, examples, and audience targeting."
+  },
+  {
+    "prompt": "Can you write Java code?",
+    "type": "bad",
+    "expectedScore": 2,
+    "notes": "Purpose is unclear — what the code should do is never specified."
+  },
+  {
+    "prompt": "How do I store data?",
+    "type": "bad",
+    "expectedScore": 3,
+    "notes": "Overly broad — missing details about the type of data, language, and storage method."
+  }
+]

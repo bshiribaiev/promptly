@@ -1,3 +1,4 @@
+import fs from 'fs';
 
 const rubric = [
   {
@@ -71,6 +72,17 @@ function scorePrompt(prompt) {
     breakdown,
   };
 }
+
+
+const badExamples = JSON.parse(fs.readFileSync("./templates_bad_examples.json", "utf-8"));
+const goldenExamples = JSON.parse(fs.readFileSync("./templates_golden_examples.json", "utf-8"));
+
+[...badExamples, ...goldenExamples].forEach(example => {
+  const result = scorePrompt(example.prompt);
+  console.log(`${example.type.toUpperCase()} PROMPT: "${example.prompt}"`);
+  console.log(`Expected: ${example.expectedScore}, Got: ${result.totalScore}, Notes: ${example.notes}`);
+});
+
 
 // ---- Example Usage ----
 //const examplePrompt = "Write a Python script that sorts a list of numbers without using sort().";
