@@ -1,0 +1,51 @@
+[
+  {
+    "name": "Purpose",
+    "weight": 2,
+    "description": "What is the main task you are trying to fulfill? What is the end result you hope to see?",
+    "badExample": "Write me code",
+    "goodExample": "Write a Python script that calculates the sum of two numbers."
+  },
+  {
+    "name": "Context",
+    "weight": 2,
+    "description": "Adding context when asking a question is important because it helps the or system you’re asking give you the most accurate, relevant, and useful answer.",
+    "badExample": "How do I fix this?",
+    "goodExample": "How do I fix this Java NullPointerException error when reading a file?"
+  },
+  {
+    "name": "Specificity",
+    "weight": 2,
+    "description": "Specificity means being clear, detailed, and precise when asking a question, instead of being broad or vague. It’s about narrowing down exactly what you want to know so the answer you get is accurate and directly useful.",
+    "badExample": "How do I use SQL?",
+    "goodExample": "How do I write a SQL query to select the top 5 customers by purchase amount?"
+  },
+  {
+    "name": "Unbiased",
+    "weight": 1,
+    "description": "Unbiased means keeping your question, and the way you look for an answer, neutral, fair, and free from personal opinions, assumptions, or preferences. It’s about not leading the system toward a certain type of answer.",
+    "badExample": "Why is this new law terrible?",
+    "goodExample": "What are the potential advantages and disadvantages of this new law?"
+  },
+  {
+    "name": "Format",
+    "weight": 1,
+    "description": "Format means structuring your question in a clear, organized, and expected way so that the  system answering knows exactly what kind of response you’re looking for. It’s not just about what you ask, it’s also about how you present it.",
+    "badExample": "Tell me about SQL",
+    "goodExample": "Can you give me a 3-step example of how to query a database in SQL?"
+  },
+  {
+    "name": "Constraints",
+    "weight": 1,
+    "description": "Constraints are the rules, limits, or conditions you include in your question to control how the answer is given. They help narrow down the solution so it fits your specific needs, instead of being too broad or impractical.",
+    "badExample": "Write a Python program to sort a list.",
+    "goodExample": "Write a Python program to sort a list without using the built-in sort() function."
+  },
+  {
+    "name": "Audience",
+    "weight": 1,
+    "description": "Audience means knowing who you’re asking the question for, and shaping your question so it makes sense and is useful to that specific group of people. It’s about adjusting the language, detail, and style based on who will answer or who will use the answer.",
+    "badExample": "Explain the backpropagation algorithm.",
+    "goodExample": "Can you explain how backpropagation works in simple terms for someone new to machine learning?"
+  }
+]
