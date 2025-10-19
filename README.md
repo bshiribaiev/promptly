@@ -44,18 +44,20 @@ Large Language Models (LLMs) are powerful tools — but they’re only as good a
 Explain the tools, technologies, and process used to build your project.
 
 **Tech Stack:**
-- **Frontend:** (e.g., React, Next.js, HTML/CSS, Flutter)
-- **Backend:** (e.g., Node.js, Flask, FastAPI)
-- **Database:** (e.g., Firebase, MongoDB, PostgreSQL)
-- **APIs / Integrations:** (e.g., OpenAI API, Google Maps API)
-- **Other Tools:** (e.g., Figma, GitHub, Docker)
+- **Frontend:** Next.js 15 (React, TypeScript) with TailwindCSS and Radix UI for modern, responsive components
+- **Backend:** Node.js server to handle API requests and connect the frontend with external services
+- **Database:** None required for the MVP; expandable to Firebase or MongoDB for saving prompts and user data
+- **APIs / Integrations:** Google AI Studio (Gemini) for AI-powered prompt optimization, ElevenLabs API for text-to-speech
+- **Other Tools:** GitHub (version control), Figma (design and prototyping)
 
-Briefly describe how the components work together or the architecture design.
+The frontend (Next.js + TailwindCSS + Radix UI) provides the interactive interface where users input prompts. The backend (Node.js) receives these prompts, routes them to APIs like Gemini for optimization and ElevenLabs for speech-to-text, allowing users to speak their prompts instead of typing. The backend then processes and sends the refined outputs back to the user. This modular design makes Promptly lightweight, scalable, and easy to extend into future integrations such as browser extensions or IDE plugins.
 
 ---
 
 ## Challenges We Ran Into
-
+- Figuring out ElevenLabs WebSocket integration
+- Connecting backend and frontend smoothly
+- Setting up and configuring the frontend environment with new tools
 ---
 
 ## Accomplishments
