@@ -37,3 +37,35 @@ export ELEVENLABS_API_KEY=your_actual_key
 ## If Still Failing
 
 Check backend logs for specific error messages and share them.
+
+---
+
+## Optional: System‑wide "Improve Selection" Quick Action
+
+Use your running backend to improve any selected text in any macOS app.
+
+1. Install jq (if missing):
+
+```bash
+brew install jq
+```
+
+2. Make script executable:
+
+```bash
+chmod +x "/Users/shiribaiev/Library/CloudStorage/GoogleDrive-bekbolnyc@gmail.com/My Drive/hack-knights/scripts/improve_selection.sh"
+```
+
+3. Automator → New → Quick Action
+   - "Workflow receives" = text in any application
+   - Add "Run Shell Script"
+   - Pass input = to stdin
+   - Script path:
+
+```bash
+"/Users/shiribaiev/Library/CloudStorage/GoogleDrive-bekbolnyc@gmail.com/My Drive/hack-knights/scripts/improve_selection.sh"
+```
+
+4. System Settings → Keyboard → Keyboard Shortcuts → Services → assign hotkey (e.g., Option+I).
+
+Use: select text → hotkey → text is replaced with improved prompt from `/ask`.
