@@ -84,5 +84,5 @@ Future Plans for Promptly:
 ---
 
 ## Demo & Resources
-- **Demo**:
+- **Demo**: https://youtu.be/AX7-Z5Wl4OY
 - **GitHub**:https://github.com/bshiribaiev?tab=repositories 
