@@ -2,51 +2,32 @@
 
 import type React from "react"
 
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Card } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Upload, Mic, MicOff, Sparkles, X, Copy, Check } from "lucide-react"
+import { useVoiceInput } from "@/hooks/useVoiceInput"
 
 export default function FreestyleMode() {
   const [prompt, setPrompt] = useState("")
   const [files, setFiles] = useState<File[]>([])
-  const [isRecording, setIsRecording] = useState(false)
   const [generatedPrompt, setGeneratedPrompt] = useState("")
   const [isGenerating, setIsGenerating] = useState(false)
   const [copied, setCopied] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const recognitionRef = useRef<any>(null)
 
-  useEffect(() => {
-    // Initialize speech recognition
-    if (typeof window !== "undefined" && "webkitSpeechRecognition" in window) {
-      const SpeechRecognition = (window as any).webkitSpeechRecognition
-      recognitionRef.current = new SpeechRecognition()
-      recognitionRef.current.continuous = true
-      recognitionRef.current.interimResults = true
-
-      recognitionRef.current.onresult = (event: any) => {
-        const transcript = Array.from(event.results)
-          .map((result: any) => result[0])
-          .map((result) => result.transcript)
-          .join("")
-        setPrompt(transcript)
-      }
-
-      recognitionRef.current.onerror = (event: any) => {
-        console.error("Speech recognition error:", event.error)
-        setIsRecording(false)
-      }
-    }
-
-    return () => {
-      if (recognitionRef.current) {
-        recognitionRef.current.stop()
-      }
-    }
-  }, [])
+  const { isRecording, transcript, toggleRecording } = useVoiceInput({
+    onTranscript: (text) => {
+      console.log("Setting prompt to:", text)
+      setPrompt(prev => prev ? `${prev} ${text}` : text)
+    },
+    onError: (error) => {
+      console.error("Voice input error:", error)
+      alert(`Voice input failed: ${error.message}`)
+    },
+  })
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -58,20 +39,6 @@ export default function FreestyleMode() {
     setFiles(files.filter((_, i) => i !== index))
   }
 
-  const toggleRecording = () => {
-    if (!recognitionRef.current) {
-      alert("Speech recognition is not supported in your browser")
-      return
-    }
-
-    if (isRecording) {
-      recognitionRef.current.stop()
-      setIsRecording(false)
-    } else {
-      recognitionRef.current.start()
-      setIsRecording(true)
-    }
-  }
 
   const handleGenerate = async () => {
     setIsGenerating(true)

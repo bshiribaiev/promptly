@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket STT Test</title>
+</head>
+<body>
+    <h1>WebSocket STT Test</h1>
+    <button id="connect">Connect WebSocket</button>
+    <button id="start" disabled>Start Recording</button>
+    <button id="stop" disabled>Stop Recording</button>
+    <div id="status"></div>
+    <div id="transcript"></div>
+
+    <script>
+        let ws = null;
+        let mediaRecorder = null;
+        let stream = null;
+
+        const status = document.getElementById('status');
+        const transcript = document.getElementById('transcript');
+        const connectBtn = document.getElementById('connect');
+        const startBtn = document.getElementById('start');
+        const stopBtn = document.getElementById('stop');
+
+        function log(msg) {
+            console.log(msg);
+            status.innerHTML += '<br>' + msg;
+        }
+
+        connectBtn.onclick = () => {
+            log('Connecting to ws://127.0.0.1:8081/ws/stt...');
+            ws = new WebSocket('ws://127.0.0.1:8081/ws/stt');
+            
+            ws.onopen = () => {
+                log('✓ WebSocket OPEN');
+                startBtn.disabled = false;
+            };
+            
+            ws.onmessage = (e) => {
+                log('← Message: ' + e.data);
+                if (e.data === 'ready') {
+                    log('✓ Server ready');
+                } else {
+                    transcript.innerHTML = '<strong>Transcript:</strong> ' + e.data;
+                }
+            };
+            
+            ws.onerror = (e) => {
+                log('✗ WebSocket ERROR: ' + JSON.stringify(e));
+            };
+            
+            ws.onclose = (e) => {
+                log('✗ WebSocket CLOSED: code=' + e.code + ', reason=' + e.reason + ', wasClean=' + e.wasClean);
+                startBtn.disabled = true;
+                stopBtn.disabled = true;
+            };
+        };
+
+        startBtn.onclick = async () => {
+            try {
+                log('Requesting microphone...');
+                stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                log('✓ Microphone access granted');
+
+                const mimeType = MediaRecorder.isTypeSupported('audio/webm;codecs=opus') 
+                    ? 'audio/webm;codecs=opus' 
+                    : 'audio/webm';
+                log('Using MIME type: ' + mimeType);
+
+                mediaRecorder = new MediaRecorder(stream, { mimeType });
+                
+                mediaRecorder.ondataavailable = (e) => {
+                    if (e.data.size > 0 && ws && ws.readyState === WebSocket.OPEN) {
+                        log('→ Sending ' + e.data.size + ' bytes');
+                        ws.send(e.data);
+                    }
+                };
+
+                mediaRecorder.start(500);
+                log('✓ Recording started (500ms chunks)');
+                startBtn.disabled = true;
+                stopBtn.disabled = false;
+            } catch (err) {
+                log('✗ Error: ' + err.message);
+            }
+        };
+
+        stopBtn.onclick = () => {
+            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                mediaRecorder.stop();
+                log('✓ Recording stopped');
+            }
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                log('✓ Microphone released');
+            }
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                log('→ Sending "end" message');
+                ws.send('end');
+            }
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+        };
+    </script>
+</body>
+</html>
+

@@ -1,5 +1,7 @@
 package com.hackknights.llm;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;
@@ -16,6 +18,8 @@ import java.time.Duration;
 @Service
 public class TranscriptionClient {
 
+    private static final Logger log = LoggerFactory.getLogger(TranscriptionClient.class);
+    
     private final String provider;
     private final String apiKey;
     private final String modelId;
@@ -41,7 +45,11 @@ public class TranscriptionClient {
     }
 
     public Mono<String> transcribe(File audioFile) {
+        log.info("Transcribe called - provider: {}, apiKey present: {}, file size: {} bytes", 
+                provider, (apiKey != null && !apiKey.isBlank()), audioFile.length());
+        
         if (!"elevenlabs".equals(provider) || apiKey == null || apiKey.isBlank()) {
+            log.warn("Transcription skipped - provider: {}, apiKey blank: {}", provider, (apiKey == null || apiKey.isBlank()));
             return Mono.just("");
         }
 
@@ -52,6 +60,8 @@ public class TranscriptionClient {
         form.add("tag_audio_events", String.valueOf(tagAudioEvents));
         form.add("diarize", String.valueOf(diarize));
 
+        log.info("Calling ElevenLabs API with model: {}, language: {}", modelId, languageCode);
+        
         return http.post()
                 // Speech-to-Text convert API
                 .uri("https://api.elevenlabs.io/v1/speech-to-text")
@@ -60,8 +70,14 @@ public class TranscriptionClient {
                 .accept(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromMultipartData(form))
                 .retrieve()
+                .onStatus(status -> !status.is2xxSuccessful(), response -> 
+                    response.bodyToMono(String.class)
+                        .doOnNext(errorBody -> log.error("ElevenLabs error response ({}): {}", response.statusCode(), errorBody))
+                        .flatMap(errorBody -> Mono.error(new RuntimeException("ElevenLabs API error: " + errorBody)))
+                )
                 .bodyToMono(String.class)
                 .timeout(Duration.ofSeconds(120))
+                .doOnNext(body -> log.info("ElevenLabs response: {}", body))
                 .map(body -> {
                     // Look for a plain "text" field; fall back to raw body
                     int i = body.indexOf("\"text\":");
@@ -74,6 +90,7 @@ public class TranscriptionClient {
                     }
                     return body;
                 })
+                .doOnError(e -> log.error("ElevenLabs API error: {}", e.getMessage(), e))
                 .onErrorReturn("");
     }
 }
