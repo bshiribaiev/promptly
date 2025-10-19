@@ -9,17 +9,17 @@
 ## 💡 Inspiration
 Large Language Models (LLMs) are powerful tools — but they’re only as good as the prompts they receive. Many users struggle to write effective prompts, leading to vague or irrelevant responses. Others simply don’t know *how* to prompt efficiently or are too busy to fine-tune their queries. We wanted to make this process simple, accessible, and impactful.  
 
-**[Prodcut Name]** was created to help users generate better, clearer, and more effective prompts — improving response quality *and* reducing unnecessary compute usage (which means a smaller carbon footprint).
+**Promptly** was created to help users generate better, clearer, and more effective prompts — improving response quality *and* reducing unnecessary compute usage (which means a smaller carbon footprint).
 
 ---
 
 ## 🧭 Why It’s Important
 
-- 💬 **Bridges the Gap Between Users and AI:** Most users don’t know how to communicate effectively with LLMs. [Product Name] empowers everyone — not just tech experts — to get high-quality results.
+- 💬 **Bridges the Gap Between Users and AI:** Most users don’t know how to communicate effectively with LLMs. Promptly empowers everyone — not just tech experts — to get high-quality results.
 
 - 🧠 **Improves Output Quality:** Well-structured prompts lead to more accurate, relevant, and creative AI responses — saving users time and frustration.
 
-- 🌱 **Reduces Computational Footprint:** Every misfired or repeated query to an LLM consumes energy and tokens. By helping users get it right the first time, [Product Name] promotes *sustainable AI usage*.
+- 🌱 **Reduces Computational Footprint:** Every misfired or repeated query to an LLM consumes energy and tokens. By helping users get it right the first time, Promptly promotes *sustainable AI usage*.
 
 - ⚙️ **Saves Time and Resources:** Reduces the need for trial-and-error prompting, cutting down on API costs and unnecessary iterations.
 
@@ -30,7 +30,7 @@ Large Language Models (LLMs) are powerful tools — but they’re only as good a
 ---
 
 ## 🚀 What It Does
-[Prodcut Name] helps users turn vague ideas into powerful, structured prompts.  
+Promptly helps users turn vague ideas into powerful, structured prompts.  
 
 **Key Features:**
 - 🧠 **Prompt Refinement:** Takes an initial rough prompt and enhances it using prompt engineering best practices.  
@@ -41,7 +41,6 @@ Large Language Models (LLMs) are powerful tools — but they’re only as good a
 ---
 
 ## 🧠 How We Built It
-Explain the tools, technologies, and process used to build your project.
 
 **Tech Stack:**
 - **Frontend:** Next.js 15 (React, TypeScript) with TailwindCSS and Radix UI for modern, responsive components
@@ -61,15 +60,26 @@ The frontend (Next.js + TailwindCSS + Radix UI) provides the interactive interfa
 ---
 
 ## Accomplishments
-
+- ✅ **First-Try Results** — Guides users to create strong prompts the first time → no endless tweaking
+- 🌍 **Lower Environmental Cost** — Fewer retries = less compute = smaller carbon footprint
+- 🧑‍🏫 **No Prompt Engineering Needed** — Anyone can master AI without specialized training
+- 🎯 **Better Outcomes** — Context-aware prompts that deliver accurate, goal-aligned results
 ---
 
 ## What We Learned
+- How to integrate and troubleshoot **unfamiliar APIs**
+- How to work with AI beyond Python — this time experimenting in **Java and JavaScript/TypeScript**
+- Debugging and problem-solving with tools and frameworks we hadn’t used before
 
 ---
 
 ## What's Next
-
+Future Plans for Promptly:
+- 🤖 **AI Agent Integration**: Connect Promptly to Slack, Gmail, and other workflows for real-time, context-aware prompting
+- 💻 **VS Code Extension**: Help developers optimize coding prompts directly in their IDE
+- 🌐 **Browser Extension**: Bring Promptly into everyday browsing for instant context-building
 ---
 
 ## Demo & Resources
+- **Demo**:
+- **GitHub**:https://github.com/bshiribaiev?tab=repositories 
