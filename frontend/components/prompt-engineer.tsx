@@ -20,7 +20,7 @@ export default function PromptEngineer() {
       <div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="mb-16 text-center">
           <h1 className="mb-6 text-balance bg-gradient-to-br from-foreground via-foreground to-foreground/70 bg-clip-text text-6xl font-bold tracking-tight text-transparent sm:text-7xl">
-            Craft Better Prompts
+            10x your agent's outputs
           </h1>
           <p className="mx-auto max-w-2xl text-pretty text-xl leading-relaxed text-muted-foreground">
             Transform your ideas into powerful AI prompts with our intelligent prompt builder
