@@ -52,7 +52,7 @@ Promptly helps users turn vague ideas into powerful, structured prompts.
 - **APIs / Integrations:** Google AI Studio (Gemini) for AI-powered prompt optimization, ElevenLabs API for text-to-speech
 - **Other Tools:** GitHub (version control), Figma (design and prototyping)
 
-The frontend (Next.js + TailwindCSS + Radix UI) provides the interactive interface where users input prompts. The backend (Node.js) receives these prompts, routes them to APIs like Gemini for optimization and ElevenLabs for speech-to-text, allowing users to speak their prompts instead of typing. The backend then processes and sends the refined outputs back to the user. This modular design makes Promptly lightweight, scalable, and easy to extend into future integrations such as browser extensions or IDE plugins.
+<img width="1924" height="1070" alt="image" src="https://github.com/user-attachments/assets/89e2b389-6617-488b-b2c5-970be9c7502d" />
 
 ---
 
@@ -84,5 +84,5 @@ Future Plans for Promptly:
 ---
 
 ## Demo & Resources
-- **Demo**:
+- **Demo**: https://youtu.be/AX7-Z5Wl4OY
 - **GitHub**:https://github.com/bshiribaiev?tab=repositories 
